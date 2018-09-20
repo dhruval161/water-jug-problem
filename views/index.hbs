@@ -1,47 +1,35 @@
 
-  <h2>lang - cpp</h2>
-  <form class="" action="" method="post">
 
-    <textarea name="codefile" rows="15" cols="80" id="mytextarea">{{code}}</textarea>
-    <div class="form-row">
-      <div class="form-group col-md-2">
-      <label for="exampleFormControlSelect1">lang</label>
-      <select class="form-control form-control-sm" id="exampleFormControlSelect1" name="lang">
-        <option>cpp</option>
-        <option>java</option>
-        <option>py</option>
-      </select>
-
-      </div>
+  <div class="row ">
+    
+    
+    <div class="col-md-8 align-self-center">
+      <h1>Water Jug Problem</h1>
     </div>
 
+    
+  </div>
+
+  <form class="" action="" method="post">
+
+    <!-- <textarea name="codefile" rows="15" cols="80" id="mytextarea">{{code}}</textarea> -->
+      <h4>Enter Input parameters</h4>
+      <div class="form-row">
+        <div class="col">
+          <input type="number" class="form-control" name="jug1" placeholder="Jug 1 capacity">
+        </div>
+        <div class="col">
+          <input type="number" class="form-control" name="jug2" placeholder="Jug 2 capacity">
+        </div>
+        <div class="col">
+          <input type="number" class="form-control" name="target" placeholder="Target amount">
+        </div>
+      </div>
+    <hr>
     <button type="submit" name="button" class="btn btn-success">Run</button>
   </form>
 
-<script type="text/javascript">
 
-$("textarea").keydown(function(e) {
-  if(e.keyCode === 9) { // tab was pressed
-      // get caret position/selection
-      var start = this.selectionStart;
-          end = this.selectionEnd;
-
-      var $this = $(this);
-
-      // set textarea value to: text before caret + tab + text after caret
-      $this.val($this.val().substring(0, start)
-                  + "\t"
-                  + $this.val().substring(end));
-
-      // put caret at right position again
-      this.selectionStart = this.selectionEnd = start + 1;
-
-      // prevent the focus lose
-      return false;
-    }
-  });
-
-</script>
 <br>
 {{#if out}}
 

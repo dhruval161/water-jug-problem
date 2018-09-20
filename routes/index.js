@@ -16,33 +16,36 @@ router.get('/', function(req, res, next) {
 
 router.post('/',function(req,res,next){
   //console.log(req.body);
-  if(req.body.lang === "cpp")
-  {
+  
 
-    var data = req.body.codefile;
-    fs.writeFileSync('input.txt',req.body.codefile);
-    exec("g++ bfs.cpp -o r",function(err,std){
-      if(err!== null)
-      {
+  var jug1 = req.body.jug1;
+  var jug2 = req.body.jug2;
+  var target = req.body.target;
+  var input = jug1 + " " + jug2 + " " + target;
+  console.log(target);
+  fs.writeFileSync('input.txt',input);
+  exec("g++ bfs.cpp -o r",function(err,std){
+    if(err!== null)
+    {
+      console.log("output: ");
+      //console.log(std);
+      console.log(err);
+      res.render('index',{title: 'compiler', out:err,result:false});
+    }
+    else {
+      console.log("compiled");
+      execFile('./r',function(error,stdout,stderr){
+
         console.log("output: ");
-        //console.log(std);
-        console.log(err);
-        res.render('index',{title: 'compiler', code:data, out:err,result:false});
-      }
-      else {
-        console.log("compiled");
-        execFile('./r',function(error,stdout,stderr){
+        console.log(stdout);
+        res.render('index',{title: 'compiler', out:stdout,result:true});
+      });
 
-          console.log("output: ");
-          console.log(stdout);
-          res.render('index',{title: 'compiler', code:data, out:stdout,result:true});
-        });
+    }
 
-      }
+  });
 
-    });
-
-  }
+  
 
 });
 

@@ -1,5 +1,5 @@
 {
-  "name": "compiler",
+  "name": "water-jug-problem",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -15,5 +15,10 @@
     "mongoose": "^5.0.0-rc1",
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5"
-  }
+  },
+  "description": "solving famous water jug problem using bfs and a* search",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "Dhruval Suthar",
+  "license": "ISC"
 }

@@ -2,30 +2,8 @@
 
 
 #include <bits/stdc++.h>
-#include <windows.h>
+
 using namespace std;
-
-// Clearing the screen in terminal
-void clear() {
-    COORD topLeft  = { 0, 0 };
-    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO screen;
-    DWORD written;
-
-    GetConsoleScreenBufferInfo(console, &screen);
-    FillConsoleOutputCharacterA(
-        console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-    );
-    FillConsoleOutputAttribute(
-        console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE,
-        screen.dwSize.X * screen.dwSize.Y, topLeft, &written
-    );
-    SetConsoleCursorPosition(console, topLeft);
-}
-
-
-
-
 
 
 // A state defines ordered pair (x,y) which means 
@@ -129,32 +107,17 @@ void bfs(state start, stack <pair <state, int> >& path)   {
 }
 
 
-void draw_border()
-{
-	cout << endl;
-	for (int i=0; i<168; i++){
-		cout << "*";
-	}
-	cout << endl;
-}
-bool ok=false;
-inline void WaitEnter() 
-{ 	
-	if(ok)
-	cout << "Press Enter to continue..."; 
-	while (std::cin.get()!='\n'); 
-}
-
 int main()  {
-	clear();
+	
+    freopen ("input.txt","r",stdin);
     stack <pair <state, int> > path;
-    cout << "Maximum capacity of first jug: ";
     cin >> capacity_x;
-    cout << "Maximum capacity of second jug: ";
     cin >> capacity_y;
-    cout << "Target amount to be achieved: ";
     cin >> target;
-    draw_border();
+    printf("Capacity of Jug 1: %d\n",capacity_x);
+    printf("Capacity of Jug 2: %d\n",capacity_y);
+    printf("Capacity of Target: %d\n",target);
+    
     bfs((state) {0, 0}, path);
     if (path.empty())
         printf("\nTarget cannot be reached.\n");
@@ -163,9 +126,7 @@ int main()  {
     	int path_length = path.size();
     	cout << "The minimum number of steps to reach the goal state is "<<path_length -1<< " steps." << endl;
     	
-    	WaitEnter();
-        ok=true;
-        draw_border();
+    	
         vector <int> rules;
         state top;
         for(int i=0; i<path_length; i++){
@@ -220,8 +181,7 @@ int main()  {
             	cout << "Amount of water in second jug: "<< top.y << endl;
            		
             }
-            WaitEnter();
-            draw_border();
+            
             
         }
         if(top.x == target) cout << "The first jug contains the required amount of water\n";
