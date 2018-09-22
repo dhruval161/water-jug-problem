@@ -4,10 +4,17 @@
 {{#if out}}
     <div class="row">
         <div class="col flexBox">
-            <h6>Target : <span id="target">0</span> </h6>
+            <h5 autofocus id="focus">Target : <span id="target">0</span> </h5>
         </div>
     </div>
-    <div class="row " class="jugsdisp" >
+
+    <div class="row">
+        <div class="col flexBox">
+            <h4 ><i id="task"></i> </h5>
+        </div>
+    </div>
+
+    <div class="row " >
     
         <div class="col flexBox">
             <div class="card" style="width: 16rem; margin-right:1rem;">
@@ -15,7 +22,7 @@
                     <h5 class="card-title">Jug 1</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug1cap">2</span> <i>l</i>  </h6>
                     <p class="card-text"> current amount: <span id="jug1am"> 0</span> </p>
-                    <a href="#" class="card-link">Card link</a>
+                    
                 </div>
             </div>
 
@@ -23,8 +30,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Jug 2</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug2cap">2</span> <i>l</i> </h6>
-                    <p class="card-text"> current amount: <span id="jug1am"> 0</span> </p>
-                    <a href="#" class="card-link">Card link</a>
+                    <p class="card-text"> current amount: <span id="jug2am"> 0</span> </p>
+                    
                 
                 </div>
             </div>
@@ -32,7 +39,7 @@
         
     </div>
 
-    <div class="row "  >
+    <div class="row " id="dispjug"  >
         
         <div class="col flexBox">
             <div id="water_detail" class="jug" >
@@ -50,16 +57,16 @@
         </div>
         
     </div>
-    <div class="row" id="jugsdisp" >
+    <div class="row " id="disppag" >
         <div class="col">
             <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
-                <li class="page-item ">
-                <a class="page-link" id="prev">Previous</a>
+                <li class="page-item " id="pageprev">
+                <a class="page-link" id="prev">Prev Step</a>
                 </li>
-                <li class="page-item"> <span id="index"></span></li>
+                <li class="page-item"> <a class="page-link" href="#"> <span id="index"></span> </a>  </li>
                 <li class="page-item" id="pagenext">
-                <a class="page-link" id="next">Next</a>
+                <a class="page-link" id="next">Next Step</a>
                 </li>
             </ul>
             </nav>
@@ -68,12 +75,16 @@
     </div>
 
   {{#if result}}
-    <div class="log">
+    <div hidden class="log">
   {{else}}
     <div class="alert alert-danger log">
   {{/if}}
 
       <pre id="outputpath">{{out}}</pre>
+  </div>
+    <br>
+  <div class="result">
+        <pre id="outputlog"></pre>
   </div>
 
 {{/if}}
@@ -81,8 +92,11 @@
 <script>
     $(document).ready(function () {
         
+        // set paginations
         var ind = 0;
         $('#index').text(ind);
+        $('#pageprev').attr('class','page-item disabled');
+
         var solution = $("#outputpath").text().split("\n");
         for(var i=0;i<solution.length;i++)
         {
@@ -103,6 +117,7 @@
         }
         var jug1cap = Number(solution[0]);
         var jug2cap = Number(solution[1]);
+        var target = Number(solution[2]);
         
         var result = solution[3];
         var jug1val = [];
@@ -110,8 +125,11 @@
         var task = [];
         if(result == "1")
         {
-            $(".log").attr("class", "alert alert-success log");
+            $(".result").attr("class", "alert alert-success result");
             var step = solution[4];
+            var successmsg = "Target can be reached in "+step + " steps";  
+            $("#outputlog").text(successmsg);
+
             step = Number(step);
             task.push("");
             jug1val.push(0);
@@ -138,15 +156,39 @@
         }
         else
         {
-            $(".log").attr("class", "alert alert-danger log");
+            $(".result").attr("class", "alert alert-danger result");
             var failmsg = solution[4];
-            $("#outputpath").text(failmsg);
-           
-           $("#jugsdisp").attr("hidden");
+            $("#outputlog").text(failmsg);
+            $('#dispjug').hide();
+            $('#disppag').hide();
+           //$("#jugsdisp").attr("hidden");
             
         }
-        console.log(solution);
+
+
+        //console.log(solution);
         $('#prev').click(function(){
+            ind--;
+            $('#jug1am').text(jug1val[ind]);
+            var result = (jug1val[ind]/jug1cap)*100;
+            $('#water_level').animate( {'margin-top' : (300-result*3)+'px' } );
+            
+            $('#jug2am').text(jug2val[ind]);
+            result = (jug2val[ind]/jug2cap)*100;
+            $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
+
+            $('#task').text(task[ind]);
+
+            $('#index').text(ind);
+            
+            if(ind  == 0)
+            {
+                $('#pageprev').attr('class','page-item disabled');
+            }
+            if(ind < jug1val.length-1)
+            {
+                $('#pagenext').attr('class','page-item');
+            }
             
         });
         $('#next').click(function(){
@@ -159,11 +201,30 @@
             result = (jug2val[ind]/jug2cap)*100;
             $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
 
+            $('#task').text(task[ind]);
+
             $('#index').text(ind);
-            if(ind >= solution.length)
+            
+            if(ind +1 == jug1val.length)
             {
-                console.log("over");
                 $('#pagenext').attr('class','page-item disabled');
+                var jugno;
+                if(jug1val[ind] == target)
+                {
+                    jugno = 1;
+                }
+                else
+                    jugno = 2;
+
+                setTimeout(function(){
+                    let msg = "Jug " + jugno + " is filled with " + target + " litres";  
+                    alert(msg);
+                },2000);
+                
+            }
+            if(ind > 0)
+            {
+                $('#pageprev').attr('class','page-item');
             }
             
         });
