@@ -114,18 +114,21 @@ int main()  {
     cin >> capacity_x;
     cin >> capacity_y;
     cin >> target;
-    printf("Capacity of Jug 1: %d\n",capacity_x);
-    printf("Capacity of Jug 2: %d\n",capacity_y);
-    printf("Capacity of Target: %d\n",target);
+    printf("%d\n",capacity_x);
+    printf("%d\n",capacity_y);
+    printf("%d\n",target);
     
     bfs((state) {0, 0}, path);
     if (path.empty())
-        printf("\nTarget cannot be reached.\n");
-    else    {
+    {
+        printf("0\n");
+        printf("Target cannot be reached.\n");
+    }
+    else   {
     	// Length of shortest path
     	int path_length = path.size();
-    	cout << "The minimum number of steps to reach the goal state is "<<path_length -1<< " steps." << endl;
-    	
+        printf("1\n");
+    	cout<<path_length -1<< endl;
     	
         vector <int> rules;
         state top;
@@ -135,13 +138,11 @@ int main()  {
             rules.push_back(path.top().second);
             path.pop();
             if(i==0){
-            	cout << "INITIAL STATE\n";
-            	cout << "Amount of water in first jug: "<< top.x << endl;
-            	cout << "Amount of water in second jug: "<< top.y << endl;
+            	continue;
             }
             else{
             	int rule = rules[i-1];
-            	cout << "STEP NUMBER: " << i << endl;
+            	
             	if(rule==1){
             		cout << "Completely fill the first jug\n";
             			
@@ -177,15 +178,13 @@ int main()  {
             		}            		
             	}
 
-            	cout << "Amount of water in first jug: "<< top.x << endl;
-            	cout << "Amount of water in second jug: "<< top.y << endl;
+            	cout << top.x << endl;
+            	cout << top.y << endl;
            		
             }
             
             
         }
-        if(top.x == target) cout << "The first jug contains the required amount of water\n";
-        else cout << "The second jug contains the required amount of water\n";
     }
 
     return 0;

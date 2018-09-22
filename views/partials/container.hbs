@@ -1,0 +1,181 @@
+
+
+
+{{#if out}}
+    <div class="row">
+        <div class="col flexBox">
+            <h6>Target : <span id="target">0</span> </h6>
+        </div>
+    </div>
+    <div class="row " class="jugsdisp" >
+    
+        <div class="col flexBox">
+            <div class="card" style="width: 16rem; margin-right:1rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Jug 1</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug1cap">2</span> <i>l</i>  </h6>
+                    <p class="card-text"> current amount: <span id="jug1am"> 0</span> </p>
+                    <a href="#" class="card-link">Card link</a>
+                </div>
+            </div>
+
+            <div class="card" style="width: 16rem; margin-left:1rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Jug 2</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug2cap">2</span> <i>l</i> </h6>
+                    <p class="card-text"> current amount: <span id="jug1am"> 0</span> </p>
+                    <a href="#" class="card-link">Card link</a>
+                
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row "  >
+        
+        <div class="col flexBox">
+            <div id="water_detail" class="jug" >
+                <div id="water_level">
+                    
+                </div>
+                
+            </div>
+
+            <div id="water_detail1" class="jug">
+                
+                <div id="water_level1"></div>
+                
+            </div>
+        </div>
+        
+    </div>
+    <div class="row" id="jugsdisp" >
+        <div class="col">
+            <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item ">
+                <a class="page-link" id="prev">Previous</a>
+                </li>
+                <li class="page-item"> <span id="index"></span></li>
+                <li class="page-item" id="pagenext">
+                <a class="page-link" id="next">Next</a>
+                </li>
+            </ul>
+            </nav>
+
+        </div>
+    </div>
+
+  {{#if result}}
+    <div class="log">
+  {{else}}
+    <div class="alert alert-danger log">
+  {{/if}}
+
+      <pre id="outputpath">{{out}}</pre>
+  </div>
+
+{{/if}}
+
+<script>
+    $(document).ready(function () {
+        
+        var ind = 0;
+        $('#index').text(ind);
+        var solution = $("#outputpath").text().split("\n");
+        for(var i=0;i<solution.length;i++)
+        {
+            solution[i] = solution[i].trim();
+            if(i==0)
+            {
+                $("#jug1cap").text(solution[i]);
+            }
+            if(i==1)
+            {
+                $("#jug2cap").text(solution[i]);
+            }
+            if(i==2)
+            {
+                $("#target").text(solution[i]);
+
+            }
+        }
+        var jug1cap = Number(solution[0]);
+        var jug2cap = Number(solution[1]);
+        
+        var result = solution[3];
+        var jug1val = [];
+        var jug2val = [];
+        var task = [];
+        if(result == "1")
+        {
+            $(".log").attr("class", "alert alert-success log");
+            var step = solution[4];
+            step = Number(step);
+            task.push("");
+            jug1val.push(0);
+            jug2val.push(0);
+            let i = 5;
+            while(i<solution.length)
+            {
+                task.push(solution[i]);
+                i++;
+                if(i >= solution.length)
+                break;
+                jug1val.push(Number(solution[i]) );
+                i++;
+                if(i >= solution.length)
+                break;
+                jug2val.push(Number(solution[i]) );
+                i++;
+                
+            }
+            console.log(task);
+            console.log(jug1val);
+            console.log(jug2val);
+            
+        }
+        else
+        {
+            $(".log").attr("class", "alert alert-danger log");
+            var failmsg = solution[4];
+            $("#outputpath").text(failmsg);
+           
+           $("#jugsdisp").attr("hidden");
+            
+        }
+        console.log(solution);
+        $('#prev').click(function(){
+            
+        });
+        $('#next').click(function(){
+            ind++;
+            $('#jug1am').text(jug1val[ind]);
+            var result = (jug1val[ind]/jug1cap)*100;
+            $('#water_level').animate( {'margin-top' : (300-result*3)+'px' } );
+            
+            $('#jug2am').text(jug2val[ind]);
+            result = (jug2val[ind]/jug2cap)*100;
+            $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
+
+            $('#index').text(ind);
+            if(ind >= solution.length)
+            {
+                console.log("over");
+                $('#pagenext').attr('class','page-item disabled');
+            }
+            
+        });
+        
+
+        /*setInterval(function() {
+            //$.get("http://www.h2o-info.com/betapage/script_water_detail.php", function (result) {
+                var result = Math.random()*100;
+            $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
+            //});
+        },2000);-*/ 
+    });
+
+    
+</script>
