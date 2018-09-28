@@ -24,7 +24,7 @@ router.post('/',function(req,res,next){
   var input = jug1 + " " + jug2 + " " + target;
   console.log(target);
   fs.writeFileSync('input.txt',input);
-  exec("g++ bfs.cpp -o r",function(err,std){
+  /*exec("g++ bfs.cpp -o r",function(err,std){
     if(err!== null)
     {
       console.log("output: ");
@@ -33,7 +33,7 @@ router.post('/',function(req,res,next){
       res.render('index',{title: 'compiler', out:err,result:false});
     }
     else {
-      console.log("compiled");
+      console.log("compiled");*/
       execFile('./r',function(error,stdout,stderr){
 
         console.log("output: ");
@@ -41,9 +41,9 @@ router.post('/',function(req,res,next){
         res.render('index',{title: 'compiler', out:stdout,result:true});
       });
 
-    }
+    /*}
 
-  });
+  });*/
 
   
 
