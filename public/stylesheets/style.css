@@ -11,6 +11,10 @@ textarea{
     justify-content: center;
 }
 
+a.buttonlnk{
+  color: white; text-decoration: none;
+}
+
 
 
 h1 {

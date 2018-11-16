@@ -26,6 +26,20 @@
     margin-top:300px;/*initially*/ 
 }
 
+#water_detail2 { 
+    height:300px; 
+    background:lightgray; 
+    overflow:hidden;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px; 
+    width:250px; 
+}
+#water_level2  { 
+    height:300px; 
+    background:rgb(78, 139, 237); 
+    margin-top:300px;/*initially*/ 
+}
+
 .jug{
     margin: 20px;
 }

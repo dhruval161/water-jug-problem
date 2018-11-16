@@ -386,27 +386,33 @@ void for_n3()
 {
      stack < pair < state2 , int > > path;
 
-    cout<<"Please enter capacity of first jug"<<endl;
+    //cout<<"Please enter capacity of first jug"<<endl;
     cin >> capacity_x;
+    cout<<capacity_x<<endl;
 
-    cout<<"Please enter capacity of second jug"<<endl;
+    //cout<<"Please enter capacity of second jug"<<endl;
     cin >> capacity_y;
+    cout<<capacity_y<<endl;
 
-    cout<<"Please enter capacity of third jug"<<endl;
+    //cout<<"Please enter capacity of third jug"<<endl;
     cin >> capacity_z;
+    cout<<capacity_z<<endl;
 
-    cout<<"Please enter desired amount of  water in first jug"<<endl;
+    //cout<<"Please enter desired amount of  water in first jug"<<endl;
     cin>>req_x;
+    cout<<req_x<<endl;
 
-    cout<<"Please enter desired amount of  water in second jug"<<endl;
+    //cout<<"Please enter desired amount of  water in second jug"<<endl;
     cin>>req_y;
+    cout<<req_y<<endl;
 
-    cout<<"Please enter desired amount of  water in third jug"<<endl;
+    //cout<<"Please enter desired amount of  water in third jug"<<endl;
     cin>>req_z;
-
+    cout<<req_z<<endl;
 
     if(req_x > capacity_x  || req_y > capacity_y || req_z > capacity_z || req_x < 0 || req_y < 0 || req_z < 0)
     {
+        cout<<0<<endl;
         cout<<"Please enter valid amount"<<endl;
         return ;
     }
@@ -422,7 +428,8 @@ void for_n3()
     {
         // Length of shortest path
         int path_length = path.size();
-         printf("Required number of steps are: \n");
+         //printf("Required number of steps are: \n");
+         cout<<1<<endl;
          cout<<path_length -1<< endl;
 
         vector <int> rules;
@@ -745,7 +752,7 @@ void modified_for_n3()
 
 int main()  {
 
-    //freopen ("input.txt","r",stdin);
+    freopen ("input.txt","r",stdin);
     //freopen ("output1.txt","w",stdout);
 
 

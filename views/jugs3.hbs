@@ -1,17 +1,53 @@
+<br>
+<form class="" action="" method="post">
+
+<!-- <textarea name="codefile" rows="15" cols="80" id="mytextarea">{{code}}</textarea> -->
+    <h6>Enter Capacity <i class="fas fa-prescription-bottle"></i>  </h6> 
+    <div class="form-row">
+    
+    <div class="col">
+        <input type="number" min="1" class="form-control" required name="jug1" placeholder="Jug 1">
+    </div>
+    <div class="col">
+        <input type="number" min="1" class="form-control" required name="jug2" placeholder="Jug 2">
+    </div>
+    <div class="col">
+        <input type="number" min="1" class="form-control" required name="jug3" placeholder="Jug 3">
+    </div>
+    
+    </div>
+
+    <br>
+    <h6>Enter Required Amount <i class="fas fa-window-maximize"></i> </h6>  
+    <div class="form-row">
+    
+    <div class="col">
+        <input type="number" min="0" class="form-control" required name="jug1r" placeholder="Jug 1">
+    </div>
+    <div class="col">
+        <input type="number" min="0" class="form-control" required name="jug2r" placeholder="Jug 2">
+    </div>
+    <div class="col">
+        <input type="number" min="0" class="form-control" required name="jug3r" placeholder="Jug 3">
+    </div>
+    
+    </div>
+
+    <br> 
+    
+<hr>
+<button  type="submit" name="button" class="btn btn-success"> Run </button>
+<a class="buttonlnk" href="/"> <button type="button" class="btn btn-primary"> Go for 2 jugs <i class="fas fa-fighter-jet"></i> </button>  </a> 
+</form>
 
 
+<br>
 
 {{#if out}}
     
     <div class="row">
         <div class="col flexBox">
-            <h4 id="focus" > Extra water left: <span id="extra"></span> </h5>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col flexBox">
-            <h4 ><i id="task"></i> </h5>
+            <h4 id="focus" ><i id="task"></i> </h5>
         </div>
     </div>
 
@@ -28,7 +64,7 @@
                 </div>
             </div>
 
-            <div class="card" style="width: 16rem; margin-left:1rem;">
+            <div class="card" style="width: 16rem; margin-left:1rem; margin-right:1rem;">
                 <div class="card-body">
                     <h5 class="card-title">Jug 2</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug2cap">2</span> <i>l</i> </h6>
@@ -39,6 +75,17 @@
                 
                 </div>
             </div>
+
+            <div class="card" style="width: 16rem; margin-left:1rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Jug 3</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug3cap">2</span> <i>l</i>  </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Target amount : <span id="jug3trg"></span> <i>l</i>  </h6>
+                    <p class="card-text"> current amount: <span id="jug3am"> 0</span> </p>
+                    
+                </div>
+            </div>
+
         </div>
         
     </div>
@@ -56,6 +103,12 @@
             <div id="water_detail1" class="jug">
                 
                 <div id="water_level1"></div>
+                
+            </div>
+
+            <div id="water_detail2" class="jug">
+                
+                <div id="water_level2"></div>
                 
             </div>
         </div>
@@ -103,57 +156,54 @@
 
         var solution = $("#outputpath").text().split("\n");
 
-        solution[0] = solution[0].trim();
-        var total = '0';
-        if(solution[0] == 1)
-        {
-            total = solution[3].trim(); 
-            total = Number(total);
-        }
-        else
-        {
-            total = "inf";
-        }
 
-        $('#extra').text(total);
-
-        for(var i=1;i<solution.length;i++)
+        for(var i=0;i<solution.length;i++)
         {
             solution[i] = solution[i].trim();
-            if(i==1)
+            if(i==0)
             {
                 $("#jug1cap").text(solution[i]);
             }
-            if(i==2)
+            if(i==1)
             {
                 $("#jug2cap").text(solution[i]);
             }
-            if(i==4)
+            if(i==2)
+            {
+                $("#jug3cap").text(solution[i]);
+            }
+            if(i==3)
             {
                 $("#jug1trg").text(solution[i]);
             }
-            if(i==5)
+            if(i==4)
             {
                 $("#jug2trg").text(solution[i]);
             }
+            if(i==5)
+            {
+                $("#jug3trg").text(solution[i]);
+            }
             
         }
-        var jug1cap = Number(solution[1]);
+        var jug1cap = Number(solution[0]);
         //$("#jug1cap").text(jug1cap);
-        var jug2cap = Number(solution[2]);
+        var jug2cap = Number(solution[1]);
+
+        var jug3cap = Number(solution[2]);
         //$("#jug2cap").text(jug2cap);
-        var jug1req = Number(solution[4]);
+        var jug1req = Number(solution[3]);
         //$("#jug1req").text(jug1req);
+        var jug2req = Number(solution[4]);
+
         var jug2req = Number(solution[5]);
         //$("#jug2req").text(jug2req);
-        console.log(jug1req);
-        console.log(jug2req);
 
         var result = solution[6];
         var jug1val = [];
         var jug2val = [];
+        var jug3val = [];
         var task = [];
-        var extra = [];
 
         if(result == "1")
         {
@@ -164,9 +214,9 @@
 
             step = Number(step);
             task.push("");
-            extra.push(total);
             jug1val.push(0);
             jug2val.push(0);
+            jug3val.push(0);
             let i = 8;
             //console.log(solution.length);
             while(i<solution.length)
@@ -183,19 +233,14 @@
                 i++;
                 if(i >= solution.length)
                 break;
-                
-                if(solution[0]==1)
-                {
-                    extra.push(Number(solution[i]));
-                    i++;
-                }
-                else
-                {
-                    extra.push("inf");
-                }
+
+                jug3val.push(Number(solution[i]) );
+                i++;
+                if(i >= solution.length)
+                break;
                 
             }
-            console.log(extra);
+
             console.log(task);
             console.log(jug1val);
             console.log(jug2val);
@@ -224,9 +269,11 @@
             result = (jug2val[ind]/jug2cap)*100;
             $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
 
-            $('#task').text(task[ind]);
+            $('#jug3am').text(jug3val[ind]);
+            result = (jug3val[ind]/jug3cap)*100;
+            $('#water_level2').animate( {'margin-top' : (300-result*3)+'px' } );
 
-            $('#extra').text(extra[ind]);
+            $('#task').text(task[ind]);
 
             $('#index').text(ind);
             
@@ -250,9 +297,11 @@
             result = (jug2val[ind]/jug2cap)*100;
             $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
 
-            $('#task').text(task[ind]);
+            $('#jug3am').text(jug3val[ind]);
+            result = (jug3val[ind]/jug3cap)*100;
+            $('#water_level2').animate( {'margin-top' : (300-result*3)+'px' } );
 
-            $('#extra').text(extra[ind]);
+            $('#task').text(task[ind]);
 
             $('#index').text(ind);
             

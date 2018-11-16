@@ -1,39 +1,32 @@
 
 
-  <div class="row ">
-    
-    <div class="col">
-      <h1>Water Jug Problem</h1>
-    </div>
-    
-
-    
-  </div>
+  
 
   <!--<div class="row">
   <div class="flexBox col" style="">
     <h2>center</h2>
-  </div>
-</div>-->
+  </div>  
+  </div>-->
 
   <br>
   <form class="" action="" method="post">
 
     <!-- <textarea name="codefile" rows="15" cols="80" id="mytextarea">{{code}}</textarea> -->
-      <h6>Enter Capacity</h6> <i class="fas fa-prescription-bottle"></i> 
+      <h6>Enter Capacity <i class="fas fa-prescription-bottle"></i>  </h6> 
       <div class="form-row">
         
         <div class="col">
-          <input type="number" min="1" class="form-control" id="jug1inp" required name="jug1" placeholder="Jug 1 capacity">
+          <input type="number" min="1" class="form-control" id="jug1inp" required name="jug1" placeholder="Jug 1">
         </div>
         <div class="col">
-          <input type="number" min="1" class="form-control" required name="jug2" placeholder="Jug 2 capacity">
+          <input type="number" min="1" class="form-control" required name="jug2" placeholder="Jug 2">
         </div>
         
         
       </div>
 
-      <h6>Enter Required Amount</h6> <i class="fas fa-window-maximize"></i> 
+      <br>
+      <h6>Enter Required Amount <i class="fas fa-window-maximize"></i>  </h6> 
       <div class="form-row">
         
         <div class="col">
@@ -57,17 +50,18 @@
       </div>
     <hr>
     <button  type="submit" name="button" class="btn btn-success"> Run </button>
+    <a class="buttonlnk" href="/jugs3"> <button type="button" class="btn btn-primary"> Go for 3 jugs <i class="fas fa-fighter-jet"></i> </button>  </a> 
   </form>
 
 
-<br>
+  <br>
 
-<script>
-  document.getElementById('checkrestrict').onchange = function() {
-    document.getElementById('restrictamount').disabled = !this.checked;
-  };  
-</script>
-  
+  <script>
+    document.getElementById('checkrestrict').onchange = function() {
+      document.getElementById('restrictamount').disabled = !this.checked;
+    };  
+  </script>
+  {{> container}}
 
 
 <!--
