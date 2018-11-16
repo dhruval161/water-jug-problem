@@ -1,0 +1,40 @@
+1
+40
+42
+1000
+4
+0
+1
+8
+Completely fill the second jug from source
+0
+42
+958
+Completely fill the first jug from second jug
+40
+2
+958
+Completely empty the first jug
+0
+2
+958
+Pour all the water from second jug to first jug
+2
+0
+958
+Completely fill the second jug from source
+2
+42
+916
+Completely fill the first jug from second jug
+40
+4
+916
+Completely empty the first jug
+0
+4
+916
+Pour all the water from second jug to first jug
+4
+0
+916

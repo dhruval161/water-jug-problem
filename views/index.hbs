@@ -20,17 +20,40 @@
   <form class="" action="" method="post">
 
     <!-- <textarea name="codefile" rows="15" cols="80" id="mytextarea">{{code}}</textarea> -->
-      <h6>Enter Input parameters</h6>
+      <h6>Enter Capacity</h6> <i class="fas fa-prescription-bottle"></i> 
       <div class="form-row">
+        
         <div class="col">
           <input type="number" min="1" class="form-control" id="jug1inp" required name="jug1" placeholder="Jug 1 capacity">
         </div>
         <div class="col">
           <input type="number" min="1" class="form-control" required name="jug2" placeholder="Jug 2 capacity">
         </div>
+        
+        
+      </div>
+
+      <h6>Enter Required Amount</h6> <i class="fas fa-window-maximize"></i> 
+      <div class="form-row">
+        
         <div class="col">
-          <input type="number" min="1" class="form-control" required name="target" placeholder="Target amount">
+          <input type="number" min="0" class="form-control" id="jug1req" required name="jug1r" placeholder="Jug 1">
         </div>
+        <div class="col">
+          <input type="number" min="0" class="form-control" required name="jug2r" placeholder="Jug 2">
+        </div>
+        
+      </div>
+
+      <br> 
+      <div class="form-row">
+        <div class="col">
+          <label class="checkbox-inline"><input type="checkbox" id="checkrestrict" name="restrict" value="1"> Limited Amount </label>
+        </div>
+        <div class="col">
+          <input type="number" min="1" class="form-control" id="restrictamount" required disabled name="total" placeholder="Total water allowed">
+        </div>
+
       </div>
     <hr>
     <button  type="submit" name="button" class="btn btn-success"> Run </button>
@@ -40,7 +63,9 @@
 <br>
 
 <script>
-  
+  document.getElementById('checkrestrict').onchange = function() {
+    document.getElementById('restrictamount').disabled = !this.checked;
+  };  
 </script>
   
 

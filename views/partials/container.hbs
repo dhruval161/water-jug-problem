@@ -2,9 +2,10 @@
 
 
 {{#if out}}
+    
     <div class="row">
         <div class="col flexBox">
-            <h5 autofocus id="focus">Target : <span id="target">0</span> </h5>
+            <h4 > Extra water left: <span id="extra"></span> </h5>
         </div>
     </div>
 
@@ -21,6 +22,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Jug 1</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug1cap">2</span> <i>l</i>  </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Target amount : <span id="jug1trg"></span> <i>l</i>  </h6>
                     <p class="card-text"> current amount: <span id="jug1am"> 0</span> </p>
                     
                 </div>
@@ -30,6 +32,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Jug 2</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Capacity : <span id="jug2cap">2</span> <i>l</i> </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Target amount : <span id="jug2trg"></span> <i>l</i>  </h6>
+
                     <p class="card-text"> current amount: <span id="jug2am"> 0</span> </p>
                     
                 
@@ -98,43 +102,73 @@
         $('#pageprev').attr('class','page-item disabled');
 
         var solution = $("#outputpath").text().split("\n");
-        for(var i=0;i<solution.length;i++)
+
+        solution[0] = solution[0].trim();
+        var total = '0';
+        if(solution[0] == 1)
+        {
+            total = solution[3].trim(); 
+            total = Number(total);
+        }
+        else
+        {
+            total = "inf";
+        }
+
+        $('#extra').text(total);
+
+        for(var i=1;i<solution.length;i++)
         {
             solution[i] = solution[i].trim();
-            if(i==0)
+            if(i==1)
             {
                 $("#jug1cap").text(solution[i]);
             }
-            if(i==1)
+            if(i==2)
             {
                 $("#jug2cap").text(solution[i]);
             }
-            if(i==2)
+            if(i==4)
             {
-                $("#target").text(solution[i]);
-
+                $("#jug1trg").text(solution[i]);
             }
+            if(i==5)
+            {
+                $("#jug2trg").text(solution[i]);
+            }
+            
         }
-        var jug1cap = Number(solution[0]);
-        var jug2cap = Number(solution[1]);
-        var target = Number(solution[2]);
-        
-        var result = solution[3];
+        var jug1cap = Number(solution[1]);
+        //$("#jug1cap").text(jug1cap);
+        var jug2cap = Number(solution[2]);
+        //$("#jug2cap").text(jug2cap);
+        var jug1req = Number(solution[4]);
+        //$("#jug1req").text(jug1req);
+        var jug2req = Number(solution[5]);
+        //$("#jug2req").text(jug2req);
+        console.log(jug1req);
+        console.log(jug2req);
+
+        var result = solution[6];
         var jug1val = [];
         var jug2val = [];
         var task = [];
+        var extra = [];
+
         if(result == "1")
         {
             $(".result").attr("class", "alert alert-success result");
-            var step = solution[4];
+            var step = solution[7];
             var successmsg = "Target can be reached in "+step + " steps";  
             $("#outputlog").text(successmsg);
 
             step = Number(step);
             task.push("");
+            extra.push(total);
             jug1val.push(0);
             jug2val.push(0);
-            let i = 5;
+            let i = 8;
+            //console.log(solution.length);
             while(i<solution.length)
             {
                 task.push(solution[i]);
@@ -147,8 +181,21 @@
                 break;
                 jug2val.push(Number(solution[i]) );
                 i++;
+                if(i >= solution.length)
+                break;
+                
+                if(solution[0]==1)
+                {
+                    extra.push(Number(solution[i]));
+                    i++;
+                }
+                else
+                {
+                    extra.push("inf");
+                }
                 
             }
+            console.log(extra);
             console.log(task);
             console.log(jug1val);
             console.log(jug2val);
@@ -157,7 +204,7 @@
         else
         {
             $(".result").attr("class", "alert alert-danger result");
-            var failmsg = solution[4];
+            var failmsg = solution[7];
             $("#outputlog").text(failmsg);
             $('#dispjug').hide();
             $('#disppag').hide();
@@ -178,6 +225,8 @@
             $('#water_level1').animate( {'margin-top' : (300-result*3)+'px' } );
 
             $('#task').text(task[ind]);
+
+            $('#extra').text(extra[ind]);
 
             $('#index').text(ind);
             
@@ -203,21 +252,16 @@
 
             $('#task').text(task[ind]);
 
+            $('#extra').text(extra[ind]);
+
             $('#index').text(ind);
             
             if(ind +1 == jug1val.length)
             {
                 $('#pagenext').attr('class','page-item disabled');
-                var jugno;
-                if(jug1val[ind] == target)
-                {
-                    jugno = 1;
-                }
-                else
-                    jugno = 2;
-
+                
                 setTimeout(function(){
-                    let msg = "Jug " + jugno + " is filled with " + target + " litres";  
+                    let msg = "Target reached";  
                     alert(msg);
                 },2000);
                 
